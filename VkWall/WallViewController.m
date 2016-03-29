@@ -20,11 +20,9 @@
     self.isRequestFinished = YES;
     
     self.posts = [[NSMutableArray alloc] init];
-    
     self.wallId = @"1";
     
     self.tableView.delegate = self;
-    NSLog(@"view did load");
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -145,8 +143,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString* text;
-    
-    NSLog(@"selected!");
     
     @synchronized(self.posts) {
         text = [self.posts objectAtIndex:[indexPath section]];

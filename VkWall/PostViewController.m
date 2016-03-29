@@ -30,9 +30,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.textView setText:self.text];
-    
-    //[self.text ]
-    
     [super viewWillAppear:animated];
 }
 

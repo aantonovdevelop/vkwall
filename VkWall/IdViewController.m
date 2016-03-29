@@ -41,6 +41,7 @@
     [self.idTextField setAutoresizingMask: autoresizing];
     [self.idTextField setFont:[UIFont fontWithName:@"Helvetica Bold" size:fontSize]];
     [self.idTextField setBackgroundColor:[UIColor whiteColor]];
+    [self.idTextField setTextAlignment:NSTextAlignmentCenter];
     [self.idTextField setDelegate:self];
     
     CGRect buttonFrame = CGRectMake(elementLeftOffset, elementTopOffset + 2*elementHeight/3, elementWidth, elementHeight);
