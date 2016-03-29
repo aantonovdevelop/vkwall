@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol WallViewControllerDelegate <NSObject>
--(void)showPost:(NSString*)text;
+-(void)showPostWithText:(NSString*)text;
 @end
 
 @interface WallViewController : UITableViewController<
@@ -17,5 +17,6 @@
     UITableViewDataSource
 >
 
+@property (atomic) NSString* wallId;
 @property (weak) id delegate;
 @end

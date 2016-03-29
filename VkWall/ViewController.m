@@ -19,17 +19,26 @@
     
     self.wallViewController = [[WallViewController alloc] initWithStyle:UITableViewStylePlain];
     self.postViewController = [[PostViewController alloc] init];
+    self.idViewController = [[IdViewController alloc] init];
     
     self.wallViewController.delegate = self;
+    self.idViewController.delegate = self;
     
-    [self pushViewController:self.wallViewController animated:NO];
+    [self pushViewController:self.idViewController animated:NO];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
--(void)showPost:(NSString *)text{
+-(void)showPostWithText:(NSString *)text{
     if([self topViewController] != self.postViewController){
         [self.postViewController setText:text];
         [self pushViewController:self.postViewController animated:YES];
+    }
+}
+
+-(void)showWallWithId:(NSString*)wallId{
+    if([self topViewController] != self.wallViewController){
+        [self.wallViewController setWallId:wallId];
+        [self pushViewController:self.wallViewController animated:YES];
     }
 }
 

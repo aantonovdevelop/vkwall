@@ -18,10 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationItem setTitle:@"Post"];
+    
     self.textView = [[UITextView alloc] initWithFrame:self.view.frame];
-    
-    [self.textView setFont:[UIFont fontWithName:@"System" size:24]];
-    
+    [self.textView setFont:[UIFont fontWithName:@"Helvetica" size:18]];
     [self.view addSubview:self.textView];
 }
 

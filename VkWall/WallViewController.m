@@ -13,9 +13,7 @@
 @property (atomic) bool isRequestFinished;
 @end
 
-@implementation WallViewController{
-    int onwerId;
-}
+@implementation WallViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,7 +21,7 @@
     
     self.posts = [[NSMutableArray alloc] init];
     
-    onwerId = 1;
+    self.wallId = @"1";
     
     self.tableView.delegate = self;
     NSLog(@"view did load");
@@ -31,6 +29,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self requestNextPosts];
+    
+    [self.navigationItem setTitle:[NSString stringWithFormat:@"Wall %@", self.wallId]];
 
     [super viewWillAppear:animated];
 }
@@ -73,7 +73,7 @@
 -(void)getWallWithOffset:(int)offset
                    count:(int)count
            andCompletion:(void(^)(NSError*))completion{
-    NSString* urlString = [NSString stringWithFormat:@"https://api.vk.com/method/wall.get?owner_id=%d&offset=%d&count=%d&version=5.50", onwerId, offset, count];
+    NSString* urlString = [NSString stringWithFormat:@"https://api.vk.com/method/wall.get?owner_id=%@&offset=%d&count=%d&version=5.50", self.wallId, offset, count];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setHTTPMethod:@"GET"];
@@ -147,7 +147,7 @@
         text = [self.posts objectAtIndex:[indexPath section]];
     }
     
-    [self.delegate showPost:text];
+    [self.delegate showPostWithText:text];
 }
 
 @end

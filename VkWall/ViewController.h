@@ -10,6 +10,7 @@
 
 #import "WallViewController.h"
 #import "PostViewController.h"
+#import "IdViewController.h"
 
 @interface ViewController : UINavigationController<
     WallViewControllerDelegate
@@ -17,6 +18,7 @@
 
 @property (strong) WallViewController* wallViewController;
 @property (strong) PostViewController* postViewController;
+@property (strong) IdViewController* idViewController;
 
 @end
 
