@@ -18,8 +18,19 @@
     [super viewDidLoad];
     
     self.wallViewController = [[WallViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.postViewController = [[PostViewController alloc] init];
+    
+    self.wallViewController.delegate = self;
+    
     [self pushViewController:self.wallViewController animated:NO];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)showPost:(NSString *)text{
+    if([self topViewController] != self.postViewController){
+        [self.postViewController setText:text];
+        [self pushViewController:self.postViewController animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

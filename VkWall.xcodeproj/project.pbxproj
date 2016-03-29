@@ -14,6 +14,7 @@
 		92E850151CA98A870033FF79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E850141CA98A870033FF79 /* Assets.xcassets */; };
 		92E850181CA98A870033FF79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E850161CA98A870033FF79 /* LaunchScreen.storyboard */; };
 		92E850211CA9C5280033FF79 /* WallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E850201CA9C5280033FF79 /* WallViewController.m */; };
+		92E850241CAA968B0033FF79 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E850231CAA968B0033FF79 /* PostViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		92E850191CA98A870033FF79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92E8501F1CA9C5280033FF79 /* WallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallViewController.h; sourceTree = "<group>"; };
 		92E850201CA9C5280033FF79 /* WallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallViewController.m; sourceTree = "<group>"; };
+		92E850221CAA968B0033FF79 /* PostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
+		92E850231CAA968B0033FF79 /* PostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				92E850081CA98A870033FF79 /* Supporting Files */,
 				92E8501F1CA9C5280033FF79 /* WallViewController.h */,
 				92E850201CA9C5280033FF79 /* WallViewController.m */,
+				92E850221CAA968B0033FF79 /* PostViewController.h */,
+				92E850231CAA968B0033FF79 /* PostViewController.m */,
 			);
 			path = VkWall;
 			sourceTree = "<group>";
@@ -158,6 +163,7 @@
 				92E8500D1CA98A870033FF79 /* AppDelegate.m in Sources */,
 				92E850211CA9C5280033FF79 /* WallViewController.m in Sources */,
 				92E8500A1CA98A870033FF79 /* main.m in Sources */,
+				92E850241CAA968B0033FF79 /* PostViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

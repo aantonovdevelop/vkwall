@@ -8,58 +8,72 @@
 
 #import "WallViewController.h"
 
+@interface WallViewController ()
+@property (strong, atomic) NSMutableArray* posts;
+@property (atomic) bool isRequestFinished;
+@end
+
 @implementation WallViewController{
     int onwerId;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isRequestFinished = YES;
+    
+    self.posts = [[NSMutableArray alloc] init];
     
     onwerId = 1;
     
     self.tableView.delegate = self;
     NSLog(@"view did load");
-    
-    [self getWallWithOffset:0 count:100 andCompletion:^(NSError* error){
-    }];
-    // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self requestNextPosts];
+
+    [super viewWillAppear:animated];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    NSLog(@" number of posts");
-    return 20;
+    NSInteger result = 0;
+    @synchronized(self.posts) {
+        result = [self.posts count];
+    }
+    return result;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 1;
 }
-
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"Title header";
-}
-
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@" indexpath %@ ", indexPath);
-    
     UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
+    NSString* post = nil;
+    @synchronized(self.posts) {
+        post = [self.posts objectAtIndex:[indexPath section]];
+    }
+    
     [cell setAccessoryType:UITableViewCellAccessoryNone];
-    [cell.textLabel setText:@"Cell text"];
+    [cell.textLabel setText:post];
     
     return cell;
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"did scroll");
+    if (self.tableView.contentOffset.y >= (self.tableView.contentSize.height - self.tableView.bounds.size.height))
+    {
+        [self requestNextPosts];
+    }
 }
 
 
 -(void)getWallWithOffset:(int)offset
                    count:(int)count
            andCompletion:(void(^)(NSError*))completion{
-    NSString* urlString = [NSString stringWithFormat:@"https://api.vk.com/method/wall.get?owner_id=%d&offset=%d&count=%d", onwerId, offset, count];
+    NSString* urlString = [NSString stringWithFormat:@"https://api.vk.com/method/wall.get?owner_id=%d&offset=%d&count=%d&version=5.50", onwerId, offset, count];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setHTTPMethod:@"GET"];
@@ -67,7 +81,7 @@
     
     NSURLSessionTask* dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
         if (error != nil) {
-            NSLog(@"error %@ ", error);
+            completion(error);
             return;
         }
         
@@ -77,15 +91,63 @@
                                         options:NSJSONReadingMutableContainers
                                           error:&jsonError];
         
-        if (error != nil) {
-            NSLog(@"error %@ ", jsonError);
+        if (jsonError != nil) {
+            completion(jsonError);
             return;
         }
         
-        NSLog(@"json %@", result);
+        NSArray* items = [result objectForKey:@"response"];
+        
+        if (items == nil) {
+            completion(nil);
+            return;
+        }
+        
+        @synchronized(self.posts) {
+            for (id item in items) {
+                if([item isKindOfClass:[NSDictionary class]] == NO) continue;
+                
+                if([item objectForKey:@"text"] == nil ||
+                   [[item objectForKey:@"text"] isEqualToString:@""]) {
+                    [self.posts addObject:@"[non-text post]"];
+                    continue;
+                }
+                
+                [self.posts addObject:[item objectForKey:@"text"]];
+            }
+        }
+    
+        completion(nil);
     }];
     
     [dataTask resume];
+}
+
+-(void)requestNextPosts{
+    if(self.isRequestFinished != YES) return;
+    
+    self.isRequestFinished = NO;
+    [self getWallWithOffset:(int)[self.posts count] count:30 andCompletion:^(NSError* error){
+        if (error != nil) {
+            self.isRequestFinished = YES;
+            return;
+        }
+        
+        [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+        self.isRequestFinished = YES;
+    }];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString* text;
+    
+    NSLog(@"selected!");
+    
+    @synchronized(self.posts) {
+        text = [self.posts objectAtIndex:[indexPath section]];
+    }
+    
+    [self.delegate showPost:text];
 }
 
 @end

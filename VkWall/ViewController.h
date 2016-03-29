@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 
 #import "WallViewController.h"
+#import "PostViewController.h"
 
-@interface ViewController : UINavigationController
+@interface ViewController : UINavigationController<
+    WallViewControllerDelegate
+>
 
 @property (strong) WallViewController* wallViewController;
+@property (strong) PostViewController* postViewController;
 
 @end
 

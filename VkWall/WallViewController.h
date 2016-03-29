@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol WallViewControllerDelegate <NSObject>
+-(void)showPost:(NSString*)text;
+@end
+
 @interface WallViewController : UITableViewController<
     UITableViewDelegate,
     UITableViewDataSource
 >
 
+@property (weak) id delegate;
 @end
