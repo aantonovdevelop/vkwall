@@ -31,23 +31,26 @@
     CGFloat elementHeight = self.view.frame.size.width / 6;
     CGFloat elementTopOffset = self.view.frame.size.height / 4;
     
+    CGFloat fontSize = elementHeight / 4;
+    CGFloat cornerRadius = elementHeight / 6;
+    
     UIViewAutoresizing autoresizing = UIViewAutoresizingFlexibleWidth;
     
     CGRect fieldFrame = CGRectMake(elementLeftOffset, elementTopOffset - 2*elementHeight/3, elementWidth, elementHeight);
     self.idTextField = [[UITextField alloc] initWithFrame:fieldFrame];
     [self.idTextField setAutoresizingMask: autoresizing];
-    [self.idTextField setFont:[UIFont fontWithName:@"Helvetica Bold" size:18]];
+    [self.idTextField setFont:[UIFont fontWithName:@"Helvetica Bold" size:fontSize]];
     [self.idTextField setBackgroundColor:[UIColor whiteColor]];
     [self.idTextField setDelegate:self];
     
     CGRect buttonFrame = CGRectMake(elementLeftOffset, elementTopOffset + 2*elementHeight/3, elementWidth, elementHeight);
     self.showButton = [[UIButton alloc] initWithFrame:buttonFrame];
     [self.showButton setAutoresizingMask: autoresizing];
-    [self.showButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica Bold" size:18]];
+    [self.showButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica Bold" size:fontSize]];
     [self.showButton setBackgroundColor:[UIColor whiteColor]];
     [self.showButton setTitle:@"Show Wall" forState:UIControlStateNormal];
     [self.showButton setTitleColor:lightBlue forState:UIControlStateNormal];
-    [self.showButton.layer setCornerRadius:10];
+    [self.showButton.layer setCornerRadius:cornerRadius];
     [self.showButton addTarget:self action:@selector(showWall:) forControlEvents:UIControlEventTouchUpInside];
     
     

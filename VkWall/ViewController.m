@@ -46,6 +46,7 @@
 -(void)showWallWithId:(NSString*)wallId{
     if([self topViewController] != self.wallViewController){
         [self.wallViewController setWallId:wallId];
+        [self.wallViewController reloadData];
         [self pushViewController:self.wallViewController animated:YES];
     }
 }

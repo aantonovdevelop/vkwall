@@ -19,4 +19,6 @@
 
 @property (atomic) NSString* wallId;
 @property (weak) id delegate;
+
+-(void)reloadData;
 @end

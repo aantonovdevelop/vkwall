@@ -28,14 +28,16 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [self.navigationItem setTitle:[NSString stringWithFormat:@"Wall %@", self.wallId]];
+
+    [super viewWillAppear:animated];
+}
+
+-(void)reloadData{
     self.posts = [[NSMutableArray alloc] init];
     [self.tableView reloadData];
     
     [self requestNextPosts];
-    
-    [self.navigationItem setTitle:[NSString stringWithFormat:@"Wall %@", self.wallId]];
-
-    [super viewWillAppear:animated];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
