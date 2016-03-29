@@ -24,8 +24,16 @@
     self.wallViewController.delegate = self;
     self.idViewController.delegate = self;
     
+    [self preloadViewControllers];
+    
     [self pushViewController:self.idViewController animated:NO];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+-(void)preloadViewControllers{
+    [self.wallViewController view];
+    [self.postViewController view];
+    [self.idViewController view];
 }
 
 -(void)showPostWithText:(NSString *)text{

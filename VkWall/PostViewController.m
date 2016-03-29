@@ -22,6 +22,9 @@
     
     self.textView = [[UITextView alloc] initWithFrame:self.view.frame];
     [self.textView setFont:[UIFont fontWithName:@"Helvetica" size:18]];
+    [self.textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    
+    [self.view setAutoresizesSubviews:YES];
     [self.view addSubview:self.textView];
 }
 

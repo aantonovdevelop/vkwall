@@ -14,6 +14,9 @@
 
 @end
 
-@interface IdViewController : UIViewController
+@interface IdViewController : UIViewController<
+    UITextFieldDelegate
+>
+
 @property (weak) id delegate;
 @end

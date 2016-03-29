@@ -20,33 +20,61 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIColor* lightBlue = [UIColor colorWithRed:0.5 green:0.75 blue:1.0 alpha:1.0];
+    
     [self.navigationItem setTitle:@"Enter Id"];
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.75 blue:1.0 alpha:1.0]];
+    [self.view setBackgroundColor:lightBlue];
     
     CGFloat elementWidth = self.view.frame.size.width / 2;
     CGFloat elementLeftOffset = self.view.frame.size.width / 4;
     
-    CGFloat elementHeight = self.view.frame.size.width / 4;
-    CGFloat elementTopOffset = self.view.frame.size.height / 2;
+    CGFloat elementHeight = self.view.frame.size.width / 6;
+    CGFloat elementTopOffset = self.view.frame.size.height / 4;
     
-    CGRect buttonFrame = CGRectMake(elementLeftOffset, elementTopOffset, elementWidth, elementHeight);
+    UIViewAutoresizing autoresizing = UIViewAutoresizingFlexibleWidth;
+    
+    CGRect fieldFrame = CGRectMake(elementLeftOffset, elementTopOffset - 2*elementHeight/3, elementWidth, elementHeight);
+    self.idTextField = [[UITextField alloc] initWithFrame:fieldFrame];
+    [self.idTextField setAutoresizingMask: autoresizing];
+    [self.idTextField setFont:[UIFont fontWithName:@"Helvetica Bold" size:18]];
+    [self.idTextField setBackgroundColor:[UIColor whiteColor]];
+    [self.idTextField setDelegate:self];
+    
+    CGRect buttonFrame = CGRectMake(elementLeftOffset, elementTopOffset + 2*elementHeight/3, elementWidth, elementHeight);
     self.showButton = [[UIButton alloc] initWithFrame:buttonFrame];
-    
-    [self.showButton setAutoresizingMask: UIViewAutoresizingFlexibleWidth];
-    
-    [self.showButton setBackgroundColor:[UIColor redColor]];
+    [self.showButton setAutoresizingMask: autoresizing];
+    [self.showButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica Bold" size:18]];
+    [self.showButton setBackgroundColor:[UIColor whiteColor]];
     [self.showButton setTitle:@"Show Wall" forState:UIControlStateNormal];
+    [self.showButton setTitleColor:lightBlue forState:UIControlStateNormal];
+    [self.showButton.layer setCornerRadius:10];
     [self.showButton addTarget:self action:@selector(showWall:) forControlEvents:UIControlEventTouchUpInside];
     
     
     [self.view setAutoresizesSubviews:YES];
+    [self.view addSubview:self.idTextField];
     [self.view addSubview:self.showButton];
 }
 
 -(void)showWall:(UIButton*)sender{
-    NSString* wallId = @"1";
+    NSString* wallId = [self.idTextField text];
+    [self.idTextField resignFirstResponder];
+    
+    if([wallId isEqualToString:@""]){
+        wallId = @"1";
+    }
     
     [self.delegate showWallWithId:wallId];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.idTextField) {
+        [textField resignFirstResponder];
+        [self showWall:self.showButton];
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

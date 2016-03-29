@@ -28,6 +28,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    self.posts = [[NSMutableArray alloc] init];
+    [self.tableView reloadData];
+    
     [self requestNextPosts];
     
     [self.navigationItem setTitle:[NSString stringWithFormat:@"Wall %@", self.wallId]];
